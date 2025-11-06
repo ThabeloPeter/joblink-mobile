@@ -11,27 +11,34 @@ export default function SplashScreen() {
 
   useEffect(() => {
     async function initialize() {
-      // Show splash for at least 2 seconds
-      const minSplashTime = new Promise((resolve) => setTimeout(resolve, 2000))
+      try {
+        // Show splash for at least 2 seconds
+        const minSplashTime = new Promise((resolve) => setTimeout(resolve, 2000))
 
-      // Check onboarding and auth in parallel
-      const [hasSeenOnboardingScreen, currentUser] = await Promise.all([
-        hasSeenOnboarding(),
-        getCurrentUser(),
-      ])
+        // Check onboarding and auth in parallel
+        const [hasSeenOnboardingScreen, currentUser] = await Promise.all([
+          hasSeenOnboarding(),
+          getCurrentUser(),
+        ])
 
-      // Wait for minimum splash time
-      await minSplashTime
+        // Wait for minimum splash time
+        await minSplashTime
 
-      setUser(currentUser)
-      setLoading(false)
+        setUser(currentUser)
+        setLoading(false)
 
-      // Navigate based on onboarding and auth status
-      if (!hasSeenOnboardingScreen) {
-        router.replace('/(onboarding)/welcome')
-      } else if (currentUser) {
-        router.replace('/(tabs)')
-      } else {
+        // Navigate based on onboarding and auth status
+        if (!hasSeenOnboardingScreen) {
+          router.replace('/(onboarding)/welcome')
+        } else if (currentUser) {
+          router.replace('/(tabs)')
+        } else {
+          router.replace('/(auth)/login')
+        }
+      } catch (error) {
+        console.error('Error initializing app:', error)
+        // On error, go to login screen
+        setLoading(false)
         router.replace('/(auth)/login')
       }
     }
