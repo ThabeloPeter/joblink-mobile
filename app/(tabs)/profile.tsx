@@ -14,11 +14,8 @@ export default function ProfileScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900">
-      <View className="flex-1 p-6">
-        <Text className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-          Profile
-        </Text>
+    <SafeAreaView className="flex-1 bg-white dark:bg-gray-900" edges={['top']}>
+      <View className="flex-1 p-6" style={{ paddingTop: 20, paddingBottom: 100 }}>
 
         <View className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-6">
           <Text className="text-sm text-gray-600 dark:text-gray-400 mb-1">Email</Text>

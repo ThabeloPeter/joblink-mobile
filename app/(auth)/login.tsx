@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState } from 'react'
 import { router } from 'expo-router'
@@ -50,57 +50,71 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-gray-900">
-      <View className="flex-1 justify-center px-6">
-        <Text className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          Welcome Back
-        </Text>
-        <Text className="text-gray-600 dark:text-gray-400 mb-8">
-          Sign in to continue to JobLink
-        </Text>
-
-        <View className="mb-4">
-          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Email
-          </Text>
-          <TextInput
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            placeholder="Enter your email"
-            placeholderTextColor="#9CA3AF"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-          />
-        </View>
-
-        <View className="mb-6">
-          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Password
-          </Text>
-          <TextInput
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            placeholder="Enter your password"
-            placeholderTextColor="#9CA3AF"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-        </View>
-
-        <TouchableOpacity
-          className="w-full bg-gray-900 dark:bg-gray-100 py-3 rounded-lg items-center justify-center mb-4"
-          onPress={handleLogin}
-          disabled={loading}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        className="flex-1"
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      >
+        <ScrollView
+          contentContainerClassName="flex-grow justify-center px-6 py-8"
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          {loading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text className="text-white dark:text-gray-900 font-semibold">
-              Sign In
+          <Text className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Welcome Back
+          </Text>
+          <Text className="text-gray-600 dark:text-gray-400 mb-8">
+            Sign in to continue to JobLink
+          </Text>
+
+          <View className="mb-5">
+            <Text className="text-base font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Email
             </Text>
-          )}
-        </TouchableOpacity>
-      </View>
+            <TextInput
+              className="w-full px-5 py-4 text-base border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              placeholder="Enter your email"
+              placeholderTextColor="#9CA3AF"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              autoComplete="email"
+              textContentType="emailAddress"
+            />
+          </View>
+
+          <View className="mb-6">
+            <Text className="text-base font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Password
+            </Text>
+            <TextInput
+              className="w-full px-5 py-4 text-base border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              placeholder="Enter your password"
+              placeholderTextColor="#9CA3AF"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              autoComplete="password"
+              textContentType="password"
+            />
+          </View>
+
+          <TouchableOpacity
+            className="w-full bg-gray-900 dark:bg-gray-100 py-4 rounded-lg items-center justify-center mb-4"
+            onPress={handleLogin}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color={Platform.OS === 'ios' ? '#fff' : '#fff'} />
+            ) : (
+              <Text className="text-white dark:text-gray-900 font-semibold text-base">
+                Sign In
+              </Text>
+            )}
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }

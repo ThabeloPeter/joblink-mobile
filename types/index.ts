@@ -28,6 +28,16 @@ export interface JobCard {
   completionImages?: string[] | null
 }
 
+// Company Types
+export interface Company {
+  id: string
+  name: string
+  email: string
+  status: 'pending' | 'approved' | 'rejected'
+  createdAt: string
+  updatedAt?: string
+}
+
 // Provider Types
 export interface Provider {
   id: string
@@ -35,6 +45,7 @@ export interface Provider {
   email: string
   phone?: string
   status: 'active' | 'inactive'
+  companyId?: string
 }
 
 // Notification Types
